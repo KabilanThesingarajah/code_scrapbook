@@ -1,6 +1,6 @@
 # ignore all files...
 *
-# that are not c files.
+# ... notice c files ... 
 !*.c
-# and are not this .gitignore file
+# ... notice this .gitignore file.
 !.gitignore
