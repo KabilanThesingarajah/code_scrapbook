@@ -5,6 +5,13 @@
 #
 
 
+.DEFAULT_GOAL := all
+
+all: % raylib_%
+	echo "made all c programs into executables"
+
+
+
 # This is to make most of the c files, it is the exact same process for each of the little commands, so we use a matching pattern
 %:
 	tcc $@.c -o $@
