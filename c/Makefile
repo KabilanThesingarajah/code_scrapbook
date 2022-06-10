@@ -5,10 +5,10 @@
 #
 
 
-.DEFAULT_GOAL := all
+.DEFAULT_GOAL := none
 
-all: % raylib_%
-	echo "made all c programs into executables"
+none: 
+	echo "must specify a file"
 
 
 
