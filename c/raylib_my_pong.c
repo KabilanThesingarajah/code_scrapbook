@@ -1,9 +1,8 @@
-
 /* Pong clone only */
-
 
 #include "raylib.h"
 
+// I need to refactor this and make the rectangles from the Rectangle.
 
 int main(void)
 {
@@ -11,15 +10,18 @@ int main(void)
     const int screenHeight = 450;
 
     int scrollSpeed = 60;
-    int playerY = screenHeight/2 - 40;
-    int playerExpectedY = playerY;
     int playerWidth = 80;
     int playerHeight = 200;
-
+    int playerY = screenHeight/2 - 40;
+    int playerX = screenWidth - playerWidth - 40;
+    int playerExpectedY = playerY;
     int playerMaxHeight = screenHeight - (playerHeight);
+    int playerPoints = 0;
 
     int botY = playerY;
-    int botSpeed = 4;
+    int botX = 40;
+    int botPoints = 0;
+    int botSpeed = 7;
 
     // perfect but slowed movement with random variance in the movement
 
@@ -29,12 +31,12 @@ int main(void)
     int ballXDir = 1;
     int ballYDir = 1;
     int ballMaxHeight = screenHeight - ballSize;
+    int ballMaxWidth = screenWidth - ballSize;
     int ballSpeed = 4;
-
+    int ball_reset_wait_time = 60;
 
     InitWindow(screenWidth, screenHeight, "pong."); 
     SetTargetFPS(60);
-
 
     // Main game loop
     while (!WindowShouldClose())
@@ -49,7 +51,6 @@ int main(void)
         else if (botY > ballY + playerHeight/2){
             botY -= botSpeed;
         }
-
 
         // player movement
         //----------------
@@ -70,8 +71,6 @@ int main(void)
             playerExpectedY = playerY;
         }
 
-
-
         // ball movement
         // -------------
         ballX += ballSpeed*ballXDir;
@@ -87,14 +86,50 @@ int main(void)
             ballYDir *=-1;
         }
 
+        //needs heavy refactoring
+        if (ballY > playerY){
+            if (ballY + ballSize < playerY + playerHeight){
+                if (ballX + ballSize > playerX) {
+                    if (ballX < playerX + playerWidth){
+                        ballXDir *=-1;
+                    }
+                }
+            }
+        }
+
+        if (ballY > botY){
+            if (ballY + ballSize < botY + playerHeight){
+                if (ballX  < botX+playerWidth) {
+                    if (ballX > botX){
+                        ballXDir *=-1;
+                    }
+                }
+            }
+        }
+
+        // if the ball goes past the boards a score count should be updated
+        if (ballX > ballMaxWidth){
+            botPoints +=1;
+            ball_reset_wait_time = 60;
+        }
+        else if (ballX < 0){
+            playerPoints +=1;
+            ball_reset_wait_time = 60;
+        }
+
+        if (ball_reset_wait_time > 0){
+            ballX = screenWidth/2;
+            ballY = screenHeight/2;
+            ball_reset_wait_time -=1;
+        }
 
         // Draw
         BeginDrawing();
 
             ClearBackground(BLACK); // clear the background
-            DrawRectangle(screenWidth - playerWidth - 40, playerY, playerWidth,playerHeight,WHITE); // draw player
-            DrawRectangle(ballX,ballY,ballSize,ballSize,WHITE); // draw ball
-            DrawRectangle(40,botY,playerWidth,playerHeight,WHITE); // draw bot
+            DrawRectangle(playerX, playerY, playerWidth,playerHeight,WHITE); // draw player
+            DrawRectangle(botX,botY,playerWidth,playerHeight,WHITE); // draw bot
+            DrawRectangle(ballX,ballY,ballSize,ballSize,BLUE); // draw ball
 
         EndDrawing();
     }
