@@ -1,4 +1,6 @@
 #include <stdio.h>
+
+/* This is a simple example of how to get input from c */
  
 int main()
 {
