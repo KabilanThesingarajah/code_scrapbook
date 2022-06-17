@@ -17,7 +17,7 @@ none:
 	tcc $@.c -o $@
 
 # This is to make the raylib files, by convention they must start with raylib_ in order to trigger this make recipie
-raylib_%:
+raylib_%: clean
 	tcc $@.c -o $@ -l raylib
 
 
