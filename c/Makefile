@@ -13,7 +13,8 @@ none:
 
 
 # This is to make most of the c files, it is the exact same process for each of the little commands, so we use a matching pattern
-%:
+%: # adding "clean" here causes a peculiar error
+	find . -type f -executable -delete # TODO need to refactor
 	tcc $@.c -o $@
 
 # This is to make the raylib files, by convention they must start with raylib_ in order to trigger this make recipie
