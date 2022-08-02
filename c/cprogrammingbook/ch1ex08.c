@@ -1,16 +1,27 @@
 #include <stdio.h>
 
 #define TARGETCHAR '\t'
+#define TARGETCHARSYMBOL '\TARGETCHARSYMBOL'
+
+// loop as long as there is not 2 newlines
 
 int main(){
 
-    int c, nl;
+    int c, newline_succesion, targetchar_sum, c_output;
 
-    nl = 0;
-    while ( ( c = getchar() ) != '\n'){
-        if ( c == TARGETCHAR ){ ++nl; } 
+    targetchar_sum = 0;
+    newline_succesion = 0;
+    while ( newline_succesion != 2 ){
+        c = getchar();
+        if ( c == TARGETCHAR ){ ++targetchar_sum; } 
+        if (c == '\n'){
+            newline_succesion++ ;
+        }
+        else{
+            newline_succesion = 0;
+        }
     }
-    printf("%d\n",nl);
+    printf("%d\n",targetchar_sum);
 
     return 0;
 }
