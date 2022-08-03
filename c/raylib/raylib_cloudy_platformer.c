@@ -34,6 +34,10 @@ typedef struct EnvItem {
     Color color;
 } EnvItem;
 
+typedef struct EnemyBird {
+    Vector2 position;
+    // state machine
+} EnemyBird;
 
 void UpdatePlayer(Player *player, EnvItem *envItems, int envItemsLength, float delta);
 
@@ -53,6 +57,8 @@ int main(void)
     player.position = (Vector2){ 400, 280 };
     player.speed = 0;
     player.canJump = false; //?
+
+    EnemyBird enemy_bird_1 = {{100,100}};
 
     EnvItem envItems[] = {
         {{ 0, 0, 1000, 400 }, 0, LIGHTGRAY },
@@ -76,15 +82,7 @@ int main(void)
     };
 
     int cameraOption = 0; 
-    int cameraUpdatersLength = sizeof(cameraUpdaters)/sizeof(cameraUpdaters[0]);
-
-    char *cameraDescriptions[] = {
-        "Follow player center",
-        "Follow player center, but clamp to map edges",
-        "Follow player center; smoothed",
-        "Follow player center horizontally; updateplayer center vertically after landing",
-        "Player push camera on getting too close to screen edge"
-    };
+    int cameraUpdatersLength = sizeof(cameraUpdaters)/sizeof(cameraUpdaters[0]); // idk
 
     SetTargetFPS(60);
     //--------------------------------------------------------------------------------------
@@ -97,18 +95,6 @@ int main(void)
         float deltaTime = GetFrameTime();
 
         UpdatePlayer(&player, envItems, envItemsLength, deltaTime);
-
-        camera.zoom += ((float)GetMouseWheelMove()*0.05f);
-
-        if (camera.zoom > 3.0f) camera.zoom = 3.0f;
-        else if (camera.zoom < 0.25f) camera.zoom = 0.25f;
-
-        if (IsKeyPressed(KEY_R))
-        {
-            camera.zoom = 1.0f;
-            player.position = (Vector2){ 400, 280 };
-        }
-
 
         // Call update camera function by its pointer
         cameraUpdaters[cameraOption](&camera, &player, envItems, envItemsLength, deltaTime, screenWidth, screenHeight);
@@ -126,6 +112,9 @@ int main(void)
 
                 Rectangle playerRect = { player.position.x - 20, player.position.y - 40, 40, 40 };
                 DrawRectangleRec(playerRect, RED);
+
+                Rectangle enemy_bird_1_rect = {enemy_bird_1.position.x - 20, enemy_bird_1.position.y - 40, 10, 10 };
+                DrawRectangleRec(enemy_bird_1_rect, GRAY);
 
             EndMode2D();
 
@@ -178,6 +167,10 @@ void UpdatePlayer(Player *player, EnvItem *envItems, int envItemsLength, float d
     else player->canJump = true;
 }
 
+
+void UpdateEnemyBird(){
+
+}
 
 void UpdateCameraCenterSmoothFollow(Camera2D *camera, Player *player, EnvItem *envItems, int envItemsLength, float delta, int width, int height)
 {
