@@ -1,0 +1,14 @@
+<%- include('partials/header'); -%>
+
+<h1>Home</h1>
+
+<p> <%= homeContent %> </p>
+<% posts.forEach((post)=>{ %>
+    <h1> <%= post.title %> </h1>
+    <p class="truncated"> <%= post.content %>  
+    <a href=<%= "/posts/" +post.title.replace(/\s+/g, '-').toLowerCase()%>>Read more.
+    </a>
+    </p> 
+<% }); %>
+
+<%- include('partials/footer'); -%>
