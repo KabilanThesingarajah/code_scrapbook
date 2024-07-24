@@ -42,9 +42,9 @@ q7_02()
 {
 	int a = 010E2; //legal both as an int and a float. E2 is 16^2
 	int b = 32.1E+5; //legal via inspection
-	int c = 0790; // legal
+	int c = 0790; // legal (mistake as 9 is not an octal number)
 	int d = 100_000; //illegal as float or integer as c does not allow _ for clarity
-	int e = 3.978e-2 //legal
+	int e = 3.978e-2; //legal
 }
 
 void
@@ -65,13 +65,13 @@ q7_04()
 	i += c;
 	c = 2 * c - 1;
 	putchar(c);
-	printf(c); //illegal
+	printf(c); //illegal (legal but warning)
 }
 
 void
 q7_05()
 {
-	0b1000001 //is illegal;
+	0b1000001;//is illegal but is a gnu extension
 }
 
 void
@@ -90,7 +90,6 @@ q7_07()
 	printf("\n is \12 in octal\n");
 	printf("\r is \15 in octal\n");
 	printf("\t is \11 in octal\n");
-	 \12 \15 \11
 }
 
 void
@@ -154,7 +153,7 @@ q7_13()
 void
 q7_14()
 {
-	printf("Yes, always\n");
+	printf("Yes, always\n"); // wrong as if f is negative then it doesn't work, and when the floating point number is very large.
 }
 
 void
