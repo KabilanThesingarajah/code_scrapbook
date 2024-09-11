@@ -1,0 +1,78 @@
+/* Name: ch11_ex.txt */
+/* Purpose: to answer the questions in the c programming modern approach book */
+/* Author: Kabilan */
+
+/* Include Directives */
+
+/* Define Directives */
+
+/* Type Definitions */
+
+/* External Variables */
+
+/* Function Prototypes */
+void q11_01();
+void q11_02();
+void q11_03(double a[], int n, double *avg, double *sum);
+void q11_04();
+void q11_05();
+void q11_06();
+void q11_07();
+void q11_08();
+
+int
+main(void)
+{
+
+	
+
+	return 0;
+}
+
+/* Function Definitions */
+void q11_01(){
+	int i;
+	int *p = &i;
+	printf("*p = %d, is the only alias for i\n", *p);
+}
+
+void q11_02(){
+	int i;
+	int *p, *q;
+	p = i // unsure, as you are saying a pointer, which stores and address is equal to a number, it might not be in the right range
+	p = &q; // unsure, as &q is an address of a pointer not an int.
+	p = *q; // unsure, *q is an int but p accept int addresses
+	*p = &i; // 1) unsure, we are assigning the variable *p to an address of i
+	p = *&q; // simply put, it is p = q, which is valid as address of p = address of q;
+	*p = q; // see 1)
+	&p = q; // illegal, you are asking for a int address q to be moved to the address &p which now would point to an int and not a pointer. You need to typecast.
+	p = q; //legal, as you are saying that p now points to what q points to. datatypes match.
+	*p = *q; // the variable *p is equal to the value at address *q;
+}
+
+void q11_03(double a[], int n, double *avg, double *sum){
+	int i;
+	
+	*sum = 0.0 //correction
+	for (i = 0; i < n; i++) {
+		sum += a[i];
+	}
+
+	*avg = *sum/n;
+}
+
+void q11_04(int *p, int *q){
+	int temp;
+	temp = *p;
+	*p = *q;
+	*q = temp;
+}
+
+void q11_05(){
+}
+void q11_06(){
+}
+void q11_07(){
+}
+void q11_08(){
+}
